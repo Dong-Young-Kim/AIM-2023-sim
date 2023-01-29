@@ -1,0 +1,12 @@
+int16           classes
+uint32          idx
+float32         posX
+float32         posY
+float32         posZ
+float32         sizeX
+float32         sizeY
+float32         sizeZ
+float32         velX
+float32         velY
+float32         velZ
+float32         heading

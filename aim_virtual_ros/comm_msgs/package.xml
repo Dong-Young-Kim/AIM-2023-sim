@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>comm_msgs</name>
+  <version>0.1.0</version>
+  <description>The comm_msgs package</description>
+  <maintainer email="point1270@gmail.com">dongyoung</maintainer>
+  <license>AIM</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>message_generation</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_export_depend>message_generation</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <exec_depend>message_generation</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>message_runtime</exec_depend>
+
+  <export></export>
+</package>
