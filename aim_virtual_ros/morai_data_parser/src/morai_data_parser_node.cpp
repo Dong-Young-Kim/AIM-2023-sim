@@ -125,7 +125,7 @@ int main(int argc, char* argv[]){
 
     pubVeh  = nh.advertise<comm_msgs::vehicleStatus> ("/morai_data_parser/vehicle_status", 1);
     pubObjs = nh.advertise<comm_msgs::objsInfo>      ("/morai_data_parser/objects", 1);
-    pubGPS  = nh.advertise<comm_msgs::gpsLocal>      ("/morai_data_parser/gpsLocal", 1);
+    pubGPS  = nh.advertise<comm_msgs::gpsLocal>      ("/morai_data_parser/gps_local", 1);
     
     while(ros::ok()){
 
