@@ -80,7 +80,7 @@ struct ego_vehicle_status{
 };
 
 struct objectInfo_data{
-    unsigned int objId;
+    unsigned short objId;
     short objType;
     float posX;
     float posY;
@@ -100,6 +100,7 @@ struct objectInfo_data{
     float accelZ;
     char linkID[38];
 };
+
 struct objectInfo{
 
     char sharp;

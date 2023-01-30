@@ -1,5 +1,5 @@
 int16           classes
-uint32          idx
+uint16          idx
 float32         posX
 float32         posY
 float32         posZ

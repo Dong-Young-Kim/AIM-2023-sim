@@ -16,20 +16,17 @@ ros::Publisher pubGPS;
 
 class VehicleSensing{
 public:
-    VehicleSensing(){
-
-    }
+    VehicleSensing(){}
 
     void run(ego_vehicle_status *evs, objectInfo *oi){
 
         senseVehicleStatus(evs);
-        //senseObject(oi);
+        senseObject(oi);
         senseLocal(evs);
 
         pubVeh.publish(this->vehicle);
         pubObjs.publish(this->objs);
         pubGPS.publish(this->maplocal);
-
     }
 
     void senseVehicleStatus(ego_vehicle_status *evs){
@@ -40,33 +37,41 @@ public:
         this->vehicle.roll      = evs->roll;
         this->vehicle.pitch     = evs->pitch;
         this->vehicle.yaw       = evs->yaw;
-        this->vehicle.yaw       = evs->yaw;
         this->vehicle.mode      = evs->ctrl_mode;
         this->vehicle.gear      = evs->gear;
         this->vehicle.speed     = evs->signed_velocity;
         this->vehicle.brake     = evs->brake;
         this->vehicle.steer     = evs->steer;
+        
+        this->vehicle.yaw       = convertHeadingE2NCW(this->vehicle.yaw); //CONVERT HEADING ENU(EAST = 0. CCW INCREASE) TO NED(NORTH = 0. CW INCREASE) 헤딩 변환
 
     }
         
     void senseObject(objectInfo *oi){
 
-        this->objs.objNum = 0;
-        for(int i = 0; ; ++i){
-            if(oi->data[i].objId != 0) ++this->objs.objNum;
-            else break;
-            this->objs.data[i].classes   = oi->data[i].objType;
-            this->objs.data[i].idx       = oi->data[i].objId;
-            this->objs.data[i].posX      = oi->data[i].posX;
-            this->objs.data[i].posY      = oi->data[i].posY;
-            this->objs.data[i].posZ      = oi->data[i].posZ;
-            this->objs.data[i].sizeX     = oi->data[i].sizeX;
-            this->objs.data[i].sizeY     = oi->data[i].sizeY;
-            this->objs.data[i].sizeZ     = oi->data[i].sizeZ;
-            this->objs.data[i].velX      = oi->data[i].velocityX;
-            this->objs.data[i].velY      = oi->data[i].velocityY;
-            this->objs.data[i].velZ      = oi->data[i].velocityZ;
-            this->objs.data[i].heading   = oi->data[i].heading;
+        this->objs.objNum = 0; 
+        this->objs.data.clear();
+
+        for(int i = 0; oi->data[i].objId != 0; ++i){
+        // for(this->objs.objNum = 0; oi->data[this->objs.objNum].objId == 0; ++this->objs.objNum){
+
+            comm_msgs::objInfo tmpObj;
+            ++(this->objs.objNum);
+
+            tmpObj.classes   = oi->data[i].objType;
+            tmpObj.idx       = oi->data[i].objId;
+            tmpObj.posX      = oi->data[i].posX;
+            tmpObj.posY      = oi->data[i].posY;
+            tmpObj.posZ      = oi->data[i].posZ;
+            tmpObj.sizeX     = oi->data[i].sizeX;
+            tmpObj.sizeY     = oi->data[i].sizeY;
+            tmpObj.sizeZ     = oi->data[i].sizeZ;
+            tmpObj.velX      = oi->data[i].velocityX;
+            tmpObj.velY      = oi->data[i].velocityY;
+            tmpObj.velZ      = oi->data[i].velocityZ;
+            tmpObj.heading   = oi->data[i].heading;
+            this->objs.data.push_back(tmpObj);
+
         }
 
         convertObj2VehCoor(true);
@@ -101,11 +106,6 @@ public:
     }
     
 private:
-
-    // struct vehInfo vehicle;
-    // short objNum;
-    // struct objInfo objs[20];
-    // struct localInfo maplocal;
 
     comm_msgs::vehicleStatus vehicle;
     comm_msgs::objsInfo objs;

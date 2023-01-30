@@ -109,7 +109,7 @@ namespace mdpar {
         }
 
         void printData(){
-            printf("[Receiving from Morai..]\n");
+            printf("[Receiving from Morai.. VEHICLE STATUS DATA]\n");
             // printf("sharp                   : %c\n", this->data->sharp);
             // printf("MaraiInfo               : %s\n", this->data->MaraiInfo);
             // printf("doller                  : %c\n", this->data->dollor);
@@ -149,7 +149,7 @@ namespace mdpar {
             printf("Acceleration XYZ        : %5.2fm/s^2, \t%5.2fm/s^2, \t%5.2fm/s^2 \n", this->data->accelX, this->data->accelY, this->data->accelZ);
             printf("map_data_id             : %d\n", this->data->map_data_id);
             printf("link ID                 : %s\n", this->data->linkID);
-            printf("========================================================================\n");
+            printf("=========================================================================================================\n");
         }
 
         struct ego_vehicle_status* data;
@@ -170,7 +170,7 @@ namespace mdpar {
         void printData(){
             objcnt = 0;
 
-            printf("[Receiving from Morai..]\n");
+            printf("[Receiving from Morai.. OBJECT INFO DATA]\n");
             printf(" object ID    Type          posXYZ               heading         sizeXYZ                 velXYZ\n");
             printf("---------------------------------------------------------------------------------------------------------\n");
 
