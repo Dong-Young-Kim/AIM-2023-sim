@@ -3,8 +3,8 @@ UDP IP 통신을 통한 상태 수신 시스템
 
 ## How to Use
 1. respository 내용 전체를 catkin_ws/src에 다운로드
-1. catkin 빌드 시스템을 통해서 'comm_msgs, morai-data-parser' 2개의 패키지 build
-1. Morai 내 출력 포트 설정
+1. catkin 빌드 시스템을 통해서 'comm_msgs', 'morai-data-parser' 2개의 패키지 build
+1. Morai Simulattor에서 출력 포트 설정
     
     ![morai_nerwork_setting](/readmeImg/morai_nerwork_setting.png)
         
@@ -17,7 +17,7 @@ UDP IP 통신을 통한 상태 수신 시스템
 
     ![node_execute](/readmeImg/node_execute.png)
 
-1. parsing 된 data는 rostopic으로 발행된다.
+1. parsing 된 data는 rostopic으로 발행
 
         /morai_data_parser/vehicle_status
         /morai_data_parser/objects
@@ -32,7 +32,12 @@ UDP IP 통신을 통한 상태 수신 시스템
 
 1. 발행된 topic 정보를 subscribe 하여 이용
 
-    
+    ``` C++
+    ros::Subscriber subVeh  = nh.subscribe<comm_msgs::vehicleStatus> ("/morai_data_parser/vehicle_status", 1, exCallback1);
+    ros::Subscriber subObjs = nh.subscribe<comm_msgs::objsInfo>      ("/morai_data_parser/objects",        1, exCallback2);
+    ros::Subscriber subGPS  = nh.subscribe<comm_msgs::gpsLocal>      ("/morai_data_parser/gps_local",      1, exCallback3);
+    ```
+     ROS c++ example
 ----
 
 
@@ -41,7 +46,7 @@ UDP IP 통신을 통한 상태 수신 시스템
 |------|---|---|
 |vehicleStatus|차량 상태 정보 (속도, 가속도, Accel, Brake, Gear 등)|[vehicleStatus.msg](/aim_virtual_ros/comm_msgs/msg/vehicleStatus.msg)|
 |objInfo|단일 객체 상태 정보 (위치<차량 기준>, 크기, index, class, 속도 등)|[objInfo.msg](/aim_virtual_ros/comm_msgs/msg/objInfo.msg)|
-|objㄴInfo|전체 객체 수, 각각의 객체 정보 vector|[objsInfo.msg](/aim_virtual_ros/comm_msgs/msg/objsInfo.msg)|
+|objsInfo|전체 객체 수, 각각의 객체 정보 vector|[objsInfo.msg](/aim_virtual_ros/comm_msgs/msg/objsInfo.msg)|
 |gpsLocal|위도, 경도, 고도, timestamp 정보|[gpsLocal.msg](/aim_virtual_ros/comm_msgs/msg/gpsLocal.msg)|
 
 
@@ -51,5 +56,4 @@ UDP IP 통신을 통한 상태 수신 시스템
     * 차량 heading 정보는 ENU -> NED로 변환하여 topic으로 발행 (NED = North = 0deg, CW increase)
     * 주변 객체 정보는 차량 좌표계 기준으로 변환하여 topic으로 발행
     * 주변 객체의 heading은 ENU coordinate 기준
-
 
